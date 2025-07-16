@@ -1,0 +1,106 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "text",
+      "name": "Welcome Message",
+      "content": "Hi! I\u2019m your personal fitness & nutrition buddy \ud83c\udfcb\ufe0f\ud83e\udd57 Let\u2019s get you feeling great! I\u2019ll ask a few quick questions to personalize your plan.",
+      "next": "input_age"
+    },
+    {
+      "id": "input_age",
+      "type": "input",
+      "name": "Ask Age",
+      "prompt": "What is your age?",
+      "variable": "user_age",
+      "next": "input_gender"
+    },
+    {
+      "id": "input_gender",
+      "type": "input",
+      "name": "Ask Gender",
+      "prompt": "What is your gender?",
+      "variable": "user_gender",
+      "next": "input_goal"
+    },
+    {
+      "id": "input_goal",
+      "type": "input",
+      "name": "Ask Fitness Goal",
+      "prompt": "What is your fitness goal? (Lose weight / Build muscle / Stay active)",
+      "variable": "user_goal",
+      "next": "input_diet"
+    },
+    {
+      "id": "input_diet",
+      "type": "input",
+      "name": "Ask Diet Preference",
+      "prompt": "What is your diet preference? (Veg / Non-veg / Vegan)",
+      "variable": "user_diet",
+      "next": "input_time"
+    },
+    {
+      "id": "input_time",
+      "type": "input",
+      "name": "Ask Time Available",
+      "prompt": "How many minutes can you spend per day? (10, 20, 30+)",
+      "variable": "user_time",
+      "next": "condition_goal"
+    },
+    {
+      "id": "condition_goal",
+      "type": "condition",
+      "name": "Route Based on Goal",
+      "variable": "user_goal",
+      "conditions": {
+        "Lose weight": "workout_lose_weight",
+        "Build muscle": "workout_build_muscle",
+        "Stay active": "workout_stay_active"
+      }
+    },
+    {
+      "id": "workout_lose_weight",
+      "type": "gpt",
+      "name": "Workout for Weight Loss",
+      "prompt": "Create a home workout routine ({{user_time}} mins) for a {{user_age}}-year-old aiming to lose weight. Include warm-up, main workout, and cool down.",
+      "next": "meal_plan"
+    },
+    {
+      "id": "workout_build_muscle",
+      "type": "gpt",
+      "name": "Workout for Muscle Gain",
+      "prompt": "Create a home workout routine ({{user_time}} mins) for a {{user_age}}-year-old aiming to build muscle. Include warm-up, main workout, and cool down.",
+      "next": "meal_plan"
+    },
+    {
+      "id": "workout_stay_active",
+      "type": "gpt",
+      "name": "Workout for Staying Active",
+      "prompt": "Create a light home workout ({{user_time}} mins) for a {{user_age}}-year-old who wants to stay active. Include stretches and light cardio.",
+      "next": "meal_plan"
+    },
+    {
+      "id": "meal_plan",
+      "type": "gpt",
+      "name": "Meal Plan Suggestion",
+      "prompt": "Suggest a healthy {{user_diet}} meal plan (breakfast, lunch, dinner) for someone aiming to {{user_goal}}. Keep it simple and nutritious.",
+      "next": "reminder_prompt"
+    },
+    {
+      "id": "reminder_prompt",
+      "type": "input",
+      "name": "Ask for Reminder Opt-in",
+      "prompt": "Would you like to receive daily fitness & meal plan reminders? (Yes/No)",
+      "variable": "reminder_opt_in",
+      "next": "wrap_up"
+    },
+    {
+      "id": "wrap_up",
+      "type": "text",
+      "name": "Wrap-Up Message",
+      "content": "That\u2019s your fitness & meal plan for today! Come back tomorrow or enable reminders to stay on track. Stay strong \ud83d\udcaa and healthy \ud83e\udd66!",
+      "next": null
+    }
+  ]
+}
